@@ -5,9 +5,21 @@ import {
   EditGuesser,
   ShowGuesser,
 } from "react-admin";
+// import { dataProvide as raDataProvider } from "./react-admin-files/raDataProvider";
+import { authProvider } from "./react-admin-files/raAuthProvider";
+import { Dashboard } from "./components/Dashboard";
 import { dataProvider } from "./dataProvider";
-import { authProvider } from "./authProvider";
+import { UserList } from "./components/UserList";
+import { UserCreate } from "./components/UserCreate";
 
 export const App = () => (
-  <Admin dataProvider={dataProvider} authProvider={authProvider}></Admin>
+  <Admin dataProvider={dataProvider} dashboard={Dashboard}>
+    <Resource
+      name="users"
+      list={UserList}
+      edit={EditGuesser}
+      show={ShowGuesser}
+      create={UserCreate}
+    />
+  </Admin>
 );
