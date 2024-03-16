@@ -3,7 +3,8 @@
 import { url } from "inspector";
 import { DataProvider, fetchUtils } from "react-admin";
 import { CLIENT_RENEG_LIMIT } from "tls";
-
+import { rename } from "./utils";
+import * as qs from "qs";
 // export const dataProvider = jsonServerProvider(
 //   import.meta.env.VITE_JSON_SERVER_URL
 // );
@@ -22,6 +23,7 @@ export const dataProvider: DataProvider = {
     });
   },
   getOne: (resource, params) => {
+    console.log(params);
     const url = `${apiUrl}/${resource}/${params.id}`;
     return httpClient(url).then(({ json }) => {
       console.log(json);
@@ -29,36 +31,38 @@ export const dataProvider: DataProvider = {
     });
   },
   getMany: (resource, params) => {
+    console.log("get Many params:", params);
+    // const query = {
+    //   filter: JSON.stringify({ id: params.ids }),
+    // };
     const query = {
-      filter: JSON.stringify({ id: params.ids }),
+      id: params.ids,
     };
-    const url = `${apiUrl}/${resource}?${JSON.stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({ data: json }));
+    console.log(params.ids);
+
+    // const url = `${apiUrl}/${resource}/${params.ids}`;
+    const url = `${apiUrl}/${resource}?id=${params.ids}`;
+    console.log("url :", url);
+    return httpClient(url).then(({ json }) => {
+      console.log("json is:", json.allCategories);
+      return { data: json.allCategories };
+    });
   },
-  /* 
   update: (resource, params) => {
-    const url = `${apiUrl}/${resource}/${params.id}`;
+    let url;
+    url = `${apiUrl}/${resource}/${params.id}`;
     console.log(params.data);
-    return httpClient(url, {
-      method: "PUT",
-      body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: json })),
-  },
-  */
-  update: (resource, params) => {
-    const url = `${apiUrl}/${resource}/${params.id}`;
-    console.log(params.data);
+    console.log(url);
     return httpClient(url, {
       method: "PUT",
       body: JSON.stringify(params.data),
     }).then(({ json }) => {
-      console.log("=======>return from update:", json);
+      // console.log("=======>return from update:", json);
       return { data: json };
     });
   },
   create: (resource, params) => {
     const url = `${apiUrl}/auth/register`;
-    console.log(params.data);
     return httpClient(url, {
       method: "POST",
       body: JSON.stringify(params.data),
@@ -69,4 +73,11 @@ export const dataProvider: DataProvider = {
       };
     });
   },
+  delete: (resource, params) => {
+    const url = `${apiUrl}/${resource}/${params.id}`;
+    return httpClient(url, { method: "DELETE" }).then(({ json }) => {
+      return { data: json };
+    });
+  },
+  // deleteMany: () => Promise.resolve(),
 };

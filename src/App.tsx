@@ -11,6 +11,9 @@ import { Dashboard } from "./components/Dashboard";
 import { dataProvider } from "./dataProvider";
 import { UserList } from "./components/UserList";
 import { UserCreate } from "./components/UserCreate";
+import { ProductList } from "./components/ProductList";
+import { ProductShow } from "./components/ProductShow";
+import { ProductEdit } from "./components/ProductEdit";
 
 export const App = () => (
   <Admin dataProvider={dataProvider} dashboard={Dashboard}>
@@ -20,6 +23,12 @@ export const App = () => (
       edit={EditGuesser}
       show={ShowGuesser}
       create={UserCreate}
+    />
+    <Resource
+      name="products"
+      list={ProductList}
+      show={ProductShow}
+      edit={ProductEdit}
     />
   </Admin>
 );
