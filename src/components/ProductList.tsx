@@ -1,9 +1,16 @@
-import { Datagrid, ImageField, List, TextField } from "react-admin";
+import {
+  CreateButton,
+  Button,
+  Datagrid,
+  ImageField,
+  List,
+  TextField,
+} from "react-admin";
 
 export const ProductList = () => {
   return (
     <List>
-      <Datagrid rowClick="edit">
+      <Datagrid rowClick="show">
         <TextField source="productSlug" />
         <TextField source="productName" />
         <TextField source="productDescription" />

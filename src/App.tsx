@@ -6,18 +6,20 @@ import {
   ShowGuesser,
 } from "react-admin";
 // import { dataProvide as raDataProvider } from "./react-admin-files/raDataProvider";
-import { authProvider } from "./react-admin-files/raAuthProvider";
 import { Dashboard } from "./components/Dashboard";
-import { dataProvider } from "./dataProvider";
+import dataProvider from "./dataProvider/index";
 import { UserList } from "./components/UserList";
 import { UserCreate } from "./components/UserCreate";
 import { ProductList } from "./components/ProductList";
 import { ProductShow } from "./components/ProductShow";
 import { ProductEdit } from "./components/ProductEdit";
+import { AccountList } from "./AccountList";
+
+console.log(dataProvider);
 
 export const App = () => (
   <Admin dataProvider={dataProvider} dashboard={Dashboard}>
-    <Resource
+    {/* <Resource
       name="users"
       list={UserList}
       edit={EditGuesser}
@@ -30,5 +32,7 @@ export const App = () => (
       show={ProductShow}
       edit={ProductEdit}
     />
+    <Resource name="card" show={ProductShow} edit={ProductEdit} /> */}
+    <Resource name="accounts" list={AccountList} />
   </Admin>
 );
